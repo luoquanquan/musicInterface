@@ -1,6 +1,8 @@
+console.log('213456')
 const Koa = require('koa')
 
 const app = new Koa()
+
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
@@ -10,8 +12,7 @@ const config = require('../config')
 const logUtil = require('./utils/logUtil')
 const { responseFormatter } = require('./middlewares')
 
-const index = require('./routes/index')
-const users = require('./routes/users')
+const index = require('./routes')
 const api = require('./api')
 
 // error handler
@@ -27,8 +28,7 @@ app.use(views(`${__dirname}/views`, { extension: 'pug' }))
 app.use(responseFormatter)
 
 // logger
-console.log(`当前时间 ${Date.now()}: debug 的数据是 config: `, config)
-if (config.log) {
+if (config.log && 0) {
   app.use(async (ctx, next) => {
     const start = new Date()
     try {
@@ -44,7 +44,6 @@ if (config.log) {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
 
 // error-handling

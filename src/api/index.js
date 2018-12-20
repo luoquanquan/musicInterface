@@ -7,9 +7,11 @@
 
 const router = require('koa-router')()
 const demo = require('./demo')
+const music = require('./music')
 
 router.prefix('/api')
 
 router.use('/demo', demo.routes(), demo.allowedMethods())
+router.use('/music', music.routes(), music.allowedMethods())
 
 module.exports = router
