@@ -1,0 +1,36 @@
+[2018-10-28T17:08:50.791] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/demo
+request client ip:  ::1
+request query:  {}
+response time: 20
+response status: 200
+response body: 
+{"_id":"5bd336fb0047b84b9711a017","sex":"male"}
+*************** response log end ***************
+
+[2018-10-28T17:09:10.007] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/demo
+request client ip:  ::1
+request query:  {}
+response time: 20
+response status: 200
+response body: 
+{"_id":"5bd336fb0047b84b9711a017","sex":"male"}
+*************** response log end ***************
+
+[2018-10-28T17:09:37.250] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /api/demo
+request client ip:  ::1
+request query:  {}
+response time: 19
+response status: 200
+response body: 
+{"_id":"5bd336fb0047b84b9711a017","sex":"male"}
+*************** response log end ***************
+
