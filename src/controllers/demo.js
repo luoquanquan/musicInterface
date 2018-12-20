@@ -1,4 +1,3 @@
-const Demo = require('../proxy').Demo
 const { getReqData, checkParams } = require('../utils')
 const log4js = require('log4js')
 const logger = log4js.getLogger()
@@ -16,7 +15,6 @@ module.exports = {
       return next()
     }
     try {
-      await Demo.createDemo({ sex })
       ctx.body = {}
     } catch (error) {
       logger.error(error)
@@ -32,7 +30,6 @@ module.exports = {
       return next()
     }
     try {
-      await Demo.remove(id)
       ctx.body = {}
     } catch (error) {
       ctx.body = {
@@ -53,7 +50,6 @@ module.exports = {
       return next()
     }
     try {
-      await Demo.update(id, sex)
       ctx.body = {}
     } catch (error) {
       ctx.body = {
@@ -65,12 +61,12 @@ module.exports = {
   // 获取 Demo
   async get (ctx, next) {
     const [{ id }] = getReqData(ctx)
-    let ret
+    let ret = { id }
     // 如果存在 id 路径说明是要访问详情, 否则是要访问 demo 列表
     if (id) {
-      ret = await Demo.findDemoById(id)
+      // 查找某个 demo 详情
     } else {
-      ret = await Demo.getDemoList()
+      // 查找 demo 列表
     }
     ctx.body = ret
   }
