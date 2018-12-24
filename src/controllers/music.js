@@ -2,7 +2,7 @@
  * @Author: luoquanquan
  * @Date: 2018-12-20 15:58:19
  * @LastEditors: luoquanquan
- * @LastEditTime: 2018-12-20 16:38:57
+ * @LastEditTime: 2018-12-24 23:19:14
  */
 const _ = require('lodash')
 const request = require('../services/request')
@@ -25,7 +25,6 @@ module.exports = {
       headers: defaultHeader,
       params: defaultData
     })
-    console.log(`${qqMusicCommonBaseUrl}/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg`)
     const slider = _slider.map(i => i.picUrl)
     const radioList = _radioList.map(i => ({ picUrl: i.picUrl, title: i.Ftitle, id: i.radioid }))
     ctx.body = { slider, radioList }
@@ -122,7 +121,6 @@ module.exports = {
       const { data: { songmid, singer: [{ name: singer }], songname } } = song
       return { songmid, singer, songname }
     })
-    console.log(songlist)
     // 第二步, 通过排行榜歌曲中的歌曲 id 获取每首歌的播放 url
     const { req_0: { data: { midurlinfo, sip: [, baseUrl] } } } = await request({
       url: `${qqMusicUrlBaseUrl}/cgi-bin/musicu.fcg`,

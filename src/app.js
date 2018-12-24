@@ -1,4 +1,3 @@
-console.log('213456')
 const Koa = require('koa')
 
 const app = new Koa()
@@ -23,6 +22,7 @@ app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
+
 app.use(require('koa-static')(`${__dirname}/public`))
 app.use(views(`${__dirname}/views`, { extension: 'pug' }))
 app.use(responseFormatter)
@@ -48,7 +48,6 @@ app.use(api.routes(), api.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
-  console.log(err)
   console.error('server error', err, ctx)
   ctx.body = '服务器异常'
 })
