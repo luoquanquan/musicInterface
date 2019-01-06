@@ -1,3 +1,7 @@
 module.exports = {
-    "extends": "standard"
+    "extends": "standard",
+    "rules": {
+      "camelcase": 0,
+      "no-useless-constructor": 0
+    }
 };
