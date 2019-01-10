@@ -12,13 +12,11 @@ const tempstamp = Date.now()
 
 // 小程序基础配置
 const projectConfig = {
-  appid: 'wxd292348da4b04d47',
-  appSecret: '39f56668e476eea5d514315898927169',
-  jwtExpiresIn: '1d',
-  jwtSalt: 'quanquandequan',
-  userInfoExpiresIn: 10000,
   qqMusicCommonBaseUrl: 'https://c.y.qq.com',
   qqMusicUrlBaseUrl: 'https://u.y.qq.com',
+  qqMusicHtmlUrl: 'https://i.y.qq.com/v8/playsong.html?songmid=004AeIvh4ML0Bz',
+  albumImgUrl: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000 .jpg',
+  singerAvatarUrl: 'https://y.gtimg.cn/music/photo_new/T001R150x150M000 .jpg',
   defaultData: {
     g_tk: '5381',
     uin: '0',
@@ -32,7 +30,6 @@ const projectConfig = {
   },
   defaultHeader: {
     authority: 'c.y.qq.com',
-    method: 'GET',
     path: 'musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&uin=0&format=json&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=' + tempstamp,
     scheme: 'https',
     accept: 'application/json',
@@ -42,9 +39,7 @@ const projectConfig = {
     dnt: '1',
     origin: 'https://m.y.qq.com',
     pragma: 'no-cache',
-    referer: 'https://m.y.qq.com/',
-    'Content-Type': 'application/json',
-    'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1'
+    'Content-Type': 'application/json'
   }
 }
 module.exports = Object.assign({

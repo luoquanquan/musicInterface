@@ -9,6 +9,7 @@
     "prod": "NODE_ENV=prod pm2 start bin/www"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "axios": "^0.18.0",
     "debug": "^2.6.3",
     "koa": "^2.2.0",

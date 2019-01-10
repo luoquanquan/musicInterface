@@ -1,4 +1,12 @@
+/*
+ * @file: 文件信息 😄
+ * @Author: luoquanquan
+ * @Date: 2019-01-04 10:20:10
+ * @LastEditors: luoquanquan
+ * @LastEditTime: 2019-01-07 00:40:53
+ */
 const Koa = require('koa')
+const cors = require('@koa/cors')
 
 const app = new Koa()
 
@@ -26,6 +34,7 @@ app.use(json())
 app.use(require('koa-static')(`${__dirname}/public`))
 app.use(views(`${__dirname}/views`, { extension: 'pug' }))
 app.use(responseFormatter)
+app.use(cors())
 
 // logger
 if (config.log && 0) {

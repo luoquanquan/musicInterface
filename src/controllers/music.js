@@ -1,18 +1,71 @@
 /*
+ * @file: 音乐模块控制器
  * @Author: luoquanquan
  * @Date: 2018-12-20 15:58:19
  * @LastEditors: luoquanquan
- * @LastEditTime: 2018-12-24 23:19:14
+ * @LastEditTime: 2019-01-10 19:30:13
  */
+
 const _ = require('lodash')
 const request = require('../services/request')
 const { getReqData } = require('../utils')
 const {
   qqMusicCommonBaseUrl,
   qqMusicUrlBaseUrl,
+  singerAvatarUrl,
   defaultHeader,
-  defaultData
+  defaultData,
+  albumImgUrl
 } = require('../../config')
+
+const n = e => {
+  if (e > 65535) {
+    return String.fromCodePoint(e)
+  } else {
+    return String.fromCharCode(e)
+  }
+}
+
+const getSougListInfo = songlist => songlist.map((song) => {
+  let songMid, singerName, singerMid, songName, songId, albumMid
+  try {
+    ({
+      data: {
+        songmid: songMid,
+        singer: [{
+          name: singerName,
+          mid: singerMid
+        }],
+        songname: songName,
+        songid: songId,
+        albummid: albumMid
+      }
+    } = song)
+  } catch (e) {
+    ({
+      songmid: songMid,
+      singer: [{
+        name: singerName,
+        mid: singerMid
+      }],
+      songname: songName,
+      songid: songId,
+      albummid: albumMid
+    } = song)
+  }
+
+  return {
+    songMid,
+    singer: {
+      singerName,
+      singerMid
+    },
+    songName,
+    songId,
+    albumMid
+  }
+})
+
 module.exports = {
   /**
    * 获取首页推荐列表
@@ -53,22 +106,25 @@ module.exports = {
   /**
    * 获取歌单内歌曲id列表
    */
-  async getSongIdlist (ctx, next) {
+  async getSongList (ctx, next) {
     const [{ id }] = getReqData(ctx)
     const {
-      update_time, total_song_num, topinfo: _topinfo, songlist: _songlist
+      update_time: updateTime, total_song_num: totalSongNum, topinfo: _topinfo, songlist
     } = await request({
       url: `${qqMusicCommonBaseUrl}/v8/fcg-bin/fcg_v8_toplist_cp.fcg`,
       headers: defaultHeader,
       params: Object.assign({}, defaultData, { topid: id })
     })
-    const topinfo = _.pick(_topinfo, ['pic_album', 'ListName'])
-    const songlist = _songlist.map((song) => {
-      // 一个 song 对象的结构
-      const { data: { songmid, singer: [{ name: singer }], songname } } = song
-      return { songmid, singer, songname }
-    })
-    ctx.body = { update_time, total_song_num, topinfo, songlist }
+    const topInfo = {
+      picAlbum: _topinfo.pic_album,
+      listName: _topinfo.ListName
+    }
+    ctx.body = {
+      updateTime,
+      totalSongNum,
+      topInfo,
+      songList: getSougListInfo(songlist)
+    }
   },
   /**
    * 获取歌曲id相关的歌曲url列表
@@ -100,50 +156,72 @@ module.exports = {
 
     ctx.body = songUrlList
   },
-  /**
-   * 直接获取用歌单内的歌曲url列表
-   */
-  async getSongList (ctx, next) {
-    const [{ id }] = getReqData(ctx)
-
-    // 重复代码 考虑优化
-    // 第一步, 通过排行榜 id 获取排行榜信息
-    const {
-      update_time, total_song_num, topinfo: _topinfo, songlist: _songlist
-    } = await request({
-      url: `${qqMusicCommonBaseUrl}/v8/fcg-bin/fcg_v8_toplist_cp.fcg`,
-      headers: defaultHeader,
-      params: Object.assign({}, defaultData, { topid: id })
-    })
-    const topinfo = _.pick(_topinfo, ['pic_album', 'ListName'])
-    const songlist = _songlist.map((song) => {
-      // 一个 song 对象的结构
-      const { data: { songmid, singer: [{ name: singer }], songname } } = song
-      return { songmid, singer, songname }
-    })
-    // 第二步, 通过排行榜歌曲中的歌曲 id 获取每首歌的播放 url
-    const { req_0: { data: { midurlinfo, sip: [, baseUrl] } } } = await request({
-      url: `${qqMusicUrlBaseUrl}/cgi-bin/musicu.fcg`,
-      headers: defaultHeader,
-      method: 'POST',
+  async search (ctx) {
+    const [{
+      w,
+      page: p = 1,
+      perPage: n = 20
+    }] = getReqData(ctx)
+    let {
       data: {
-        req_0: {
-          module: 'vkey.GetVkeyServer',
-          method: 'CgiGetVkey',
-          param: {
-            guid: '5579254314', songmid: songlist.map(song => song.songmid), songtype: [], uin: '', loginflag: 1, platform: '23', h5to: 'speed'
-          }
-        },
-        comm: {
-          g_tk: 1679324996, uin: '', format: 'json', ct: 23, cv: 0
+        song: {
+          curnum: currentNumber,
+          curpage: currentPage,
+          totalnum: totalNumber,
+          list
         }
       }
+    } = await request({
+      url: `${qqMusicCommonBaseUrl}/soso/fcgi-bin/search_for_qq_cp`,
+      headers: defaultHeader,
+      method: 'GET',
+      params: Object.assign({}, defaultData, { w, p, n })
     })
 
-    // 第三步, 整合数据
-    songlist.forEach((song, index) => {
-      song.src = `${baseUrl}${midurlinfo[index] && midurlinfo[index].purl}`
+    ctx.body = {
+      page: {
+        currentNumber,
+        currentPage,
+        totalNumber
+      },
+      songList: getSougListInfo(list)
+    }
+  },
+  getAlbumImg (ctx) {
+    const [{ albummid, singerMid }] = getReqData(ctx)
+    ctx.body = {
+      albumImgUrl: albumImgUrl.replace(/ /, albummid),
+      singerAvatarUrl: singerAvatarUrl.replace(/ /, singerMid)
+    }
+  },
+  async getLrc (ctx) {
+    const [{ id: musicid }] = getReqData(ctx)
+    const reg = /jsonp1\((.*)\)/
+    const data = await request({
+      url: `${qqMusicCommonBaseUrl}/lyric/fcgi-bin/fcg_query_lyric.fcg`,
+      headers: defaultHeader,
+      params: Object.assign({}, defaultData, {
+        musicid,
+        nobase64: 1,
+        jsonpCallback: 'jsonp1'
+      })
     })
-    ctx.body = { update_time, total_song_num, topinfo, songlist }
+    const lrcContent = data.match(reg)[1]
+
+    if (lrcContent) {
+      let { lyric } = JSON.parse(lrcContent)
+      lyric = lyric.replace(/&amp;/g, '&#38;').replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;').replace(/&quot;/g, '&#34;').replace(/&apos;/g, '&#39;').replace(/&nbsp;/g, '&#160;').replace(/&#(\d+);?/g, function (e, t) {
+        if (+t === 10) return '[换行]'
+        return n(t)
+      }).replace(/&#x([0-9a-f]+);?/gi, function (e, t) {
+        return n(parseInt(t, 16))
+      })
+      ctx.body = { lyric }
+    } else {
+      ctx.body = {
+        code: 3000,
+        msg: '歌词检索失败'
+      }
+    }
   }
 }
