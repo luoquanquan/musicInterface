@@ -3,7 +3,7 @@
  * @Author: luoquanquan
  * @Date: 2019-01-04 10:20:10
  * @LastEditors: luoquanquan
- * @LastEditTime: 2019-01-10 19:35:06
+ * @LastEditTime: 2019-01-10 20:09:31
  -->
 > 吃着火锅, 写着代码, 听着歌...一不小心某音乐就上市了. 趁着兴头扒了一套 api (极简, 可用, 从获取排行榜到歌曲播放 url, 歌词, 封面等信息). 现共享一下接口文档. 大家玩儿的开心. 😄
 
@@ -15,7 +15,7 @@
 
 ![2019-01-06-16-05-29](http://img.blog.niubishanshan.top/2019-01-06-16-05-29.png)
 
-## 本项目项目地址[github](https://github.com/luoquanquan/musicInterFace)
+## 本项目地址[github](https://github.com/luoquanquan/musicInterFace)
 
 ## 接口域名
 
@@ -125,18 +125,18 @@ data | object | 接口返回数据主体
             "picUrl": "http://y.gtimg.cn/music/photo_new/T003R300x300M000004DDmku3TdWR9.jpg",
             "songList": [
                 {
-                    "singername": "林俊杰",
-                    "songname": "不为谁而作的歌",
+                    "singerName": "林俊杰",
+                    "songName": "不为谁而作的歌",
                     "number": 1
                 },
                 {
-                    "singername": "林俊杰",
-                    "songname": "圣所",
+                    "singerName": "林俊杰",
+                    "songName": "圣所",
                     "number": 2
                 },
                 {
-                    "singername": "GAI",
-                    "songname": "永不独行",
+                    "singerName": "GAI",
+                    "songName": "永不独行",
                     "number": 3
                 }
             ]
@@ -455,6 +455,6 @@ data | object | 返回数据
 
 代码健壮的像一头牛, 不会报错~
 
-# 最后我也立个 flag: 如果这篇文章点赞超过 666, 我写文章分享我爬取数据的过程和实现的方式. 感谢大家的支持...
+# 最后我也立个 flag: 如果这篇文章点赞超过 666, 我写文章分享爬取数据的过程和实现的方式. 感谢大家的支持...
 
 #### 本接口仅用作学习交流之用, 请不要用在不正当手段. 测试服务没有做任何处理, 扛不住 ddos 等等各种攻击, 希望大佬手下留情

@@ -3,7 +3,7 @@
  * @Author: luoquanquan
  * @Date: 2018-12-20 15:58:19
  * @LastEditors: luoquanquan
- * @LastEditTime: 2019-01-10 19:30:13
+ * @LastEditTime: 2019-01-10 20:06:33
  */
 
 const _ = require('lodash')
@@ -95,7 +95,14 @@ module.exports = {
       const {
         id, listenCount, picUrl, songList: _songList, topTitle: title
       } = item
-      const songList = _songList.map((i, index) => Object.assign({}, i, { number: index + 1 }))
+      const songList = _songList.map((i, index) => {
+        const {
+          singername: singerName,
+          songname: songName
+        } = i
+        return Object.assign({}, { singerName, songName }, { number: index + 1 })
+      })
+
       return {
         id, title, listenCount, picUrl, songList
       }
