@@ -3,10 +3,8 @@
  * @Author: luoquanquan
  * @Date: 2018-12-20 15:58:19
  * @LastEditors: luoquanquan
- * @LastEditTime: 2019-01-10 20:06:33
+ * @LastEditTime: 2019-01-21 22:00:39
  */
-
-const _ = require('lodash')
 const request = require('../services/request')
 const { getReqData } = require('../utils')
 const {
@@ -27,15 +25,12 @@ const n = e => {
 }
 
 const getSougListInfo = songlist => songlist.map((song) => {
-  let songMid, singerName, singerMid, songName, songId, albumMid
+  let songMid, singer, songName, songId, albumMid
   try {
     ({
       data: {
         songmid: songMid,
-        singer: [{
-          name: singerName,
-          mid: singerMid
-        }],
+        singer,
         songname: songName,
         songid: songId,
         albummid: albumMid
@@ -44,22 +39,16 @@ const getSougListInfo = songlist => songlist.map((song) => {
   } catch (e) {
     ({
       songmid: songMid,
-      singer: [{
-        name: singerName,
-        mid: singerMid
-      }],
+      singer,
       songname: songName,
       songid: songId,
       albummid: albumMid
     } = song)
   }
-
+  singer = singer.map(i => ({ singerName: i.name, singerMid: i.mid }))
   return {
     songMid,
-    singer: {
-      singerName,
-      singerMid
-    },
+    singer,
     songName,
     songId,
     albumMid

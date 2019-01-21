@@ -3,7 +3,7 @@
  * @Author: luoquanquan
  * @Date: 2019-01-04 10:20:10
  * @LastEditors: luoquanquan
- * @LastEditTime: 2019-01-10 20:09:31
+ * @LastEditTime: 2019-01-21 22:04:04
  -->
 > 吃着火锅, 写着代码, 听着歌...一不小心某音乐就上市了. 趁着兴头扒了一套 api (极简, 可用, 从获取排行榜到歌曲播放 url, 歌词, 封面等信息). 现共享一下接口文档. 大家玩儿的开心. 😄
 
@@ -159,8 +159,8 @@ data | array | 接口返回数据主体
 &nbsp;&nbsp;listenCount | int | 歌单播放次数
 &nbsp;&nbsp;picUrl | string | 歌单 logo url
 &nbsp;&nbsp;songList | array | 歌单中排行榜前三的曲目
-&nbsp;&nbsp;&nbsp;&nbsp;singername | string | 歌手名称
-&nbsp;&nbsp;&nbsp;&nbsp;songname | string | 歌曲名称
+&nbsp;&nbsp;&nbsp;&nbsp;singerName | string | 歌手名称
+&nbsp;&nbsp;&nbsp;&nbsp;songName | string | 歌曲名称
 &nbsp;&nbsp;&nbsp;&nbsp;number | int | 排行
 
 ### 2.6 错误状态码
@@ -202,10 +202,12 @@ songListId | string | 歌单id, 就是排行榜中获取的歌单条目的id字�
         "songList": [
             {
                 "songMid": "002K4xqW4A7m7q",
-                "singer": {
+                "singer": [
+                  {
                     "singerName": "林俊杰",
                     "singerMid": "001BLpXF2DyJe2"
-                },
+                  }
+                ],
                 "songName": "不为谁而作的歌",
                 "songId": 105095766,
                 "albumMid": "003nbc0602Tgfx"
@@ -231,7 +233,7 @@ data | object | 接口返回数据主体
 &nbsp;&nbsp;&nbsp;&nbsp;listName | string | 歌单名称
 &nbsp;&nbsp;songList | array | 歌曲列表
 &nbsp;&nbsp;&nbsp;&nbsp;songMid | string | 歌曲id
-&nbsp;&nbsp;&nbsp;&nbsp;singer | string | 歌手名称
+&nbsp;&nbsp;&nbsp;&nbsp;singer | array | 歌手信息
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;singerName | string | 歌手名称
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;singerMid | string | 歌手媒体 id, 用户获取歌手头像
 &nbsp;&nbsp;&nbsp;&nbsp;songName | string | 歌曲名称
@@ -323,10 +325,12 @@ page | int | (非必须, 默认值为 20)每页条数
         "songList": [
             {
                 "songMid": "003ALEZa186Qlq",
-                "singer": {
+                "singer": [
+                  {
                     "singerName": "孙子涵",
                     "singerMid": "001oXbjs29oPul"
-                },
+                  }
+                ],
                 "songName": "唐人",
                 "songId": 4823575,
                 "albumMid": "002CWEnV2g4m3p"
@@ -351,7 +355,7 @@ data | object | 返回数据
 &nbsp;&nbsp;&nbsp;&nbsp;totalNumber | int | 总条目数
 &nbsp;&nbsp;songList | array | 歌曲列表
 &nbsp;&nbsp;&nbsp;&nbsp;songMid | string | 歌曲id
-&nbsp;&nbsp;&nbsp;&nbsp;singer | string | 歌手名称
+&nbsp;&nbsp;&nbsp;&nbsp;singer | array | 歌手信息
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;singerName | string | 歌手名称
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;singerMid | string | 歌手媒体 id, 用户获取歌手头像
 &nbsp;&nbsp;&nbsp;&nbsp;songName | string | 歌曲名称
