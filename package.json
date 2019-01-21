@@ -21,7 +21,6 @@
     "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
-    "lodash": "^4.17.11",
     "log4js": "^3.0.6",
     "mongoose": "^5.3.6",
     "pug": "^2.0.0-rc.1"
