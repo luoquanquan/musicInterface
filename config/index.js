@@ -12,6 +12,7 @@ const tempstamp = Date.now()
 
 // 小程序基础配置
 const projectConfig = {
+  defaultApiCacheValidate: 1000 * 60 * 60 * 24,
   qqMusicCommonBaseUrl: 'https://c.y.qq.com',
   qqMusicUrlBaseUrl: 'https://u.y.qq.com',
   qqMusicHtmlUrl: 'https://i.y.qq.com/v8/playsong.html?songmid=004AeIvh4ML0Bz',
