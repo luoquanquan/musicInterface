@@ -9,7 +9,7 @@ module.exports = {
   // 数据库配置
   mongo: {
     host: '127.0.0.1',
-    db: 'demo',
+    db: 'music',
     port: 27017,
     pass: '',
     user: ''
